@@ -73,23 +73,13 @@ WSGI_APPLICATION = 'untitled1.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'daxiangzhanshi',
-        'USER': 'jiang',
-        'PASSWORD': 'jiangwenhui',
-        'HOST': '121.201.68.21',
-        'PORT': 3307,
-
-    }
-}
-DATABASES1 = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'xiaoshuo',
-        'USER': 'xiaoshuo',
-        'PASSWORD': 'qiangzi()',
+        'NAME': 'xxxxcuo',
+        'USER': 'xxxxxco',
+        'PASSWORD': 'qxxxxxccxi()',
         'HOST': 'mysql.litianqiang.com',
         'PORT': 7150,
 
