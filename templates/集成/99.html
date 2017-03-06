@@ -1,0 +1,191 @@
+
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf8" />
+    <title>大屏管理</title>
+    <link href="https://datav.aliyun.com/static/css/flat-ui/vendor/bootstrap.min.css"  rel="stylesheet"/>
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="/static/css/admin/screen.css?1487238408964" rel="stylesheet"/>
+    <link href="/static/css/admin/header.css?1487238408964" rel="stylesheet"/>
+    <link href="/static/css/switch.css?1487238408964" rel="stylesheet"/>
+    <link href="/static/css/dialog.css?1487238408964" rel="stylesheet"/>
+    <!-- <link href="/static/css/font-awesome.min.css"  rel="stylesheet"/> -->
+    <script>
+      document.domain = 'datav.aliyun.com';
+    </script>
+    <script src="/static/js/analytics.js"></script>
+  </head>
+
+  <body><script>
+with(document)with(body)with(insertBefore(createElement("script"),firstChild))setAttribute("exparams","category=&userid=&aplus&yunid=%22a31318%2a%2a%2a%2a%22&&asid=AAC4kKVYruMwKmfQ4m0=",id="tb-beacon-aplus",src=(location>"https"?"//s":"//a")+".tbcdn.cn/s/aplus_v2.js")
+</script>
+
+    <div id="app"> </div>
+    <script type="text/javascript" src='/static/js/libs/cube.min.js?1487238408964'></script>
+
+    <script src="/static/js/libs/jquery-2.1.1.min.js" ></script>
+    <script src="/static/js/libs/lodash.min.js?1487238408964" ></script>
+    <script src="/static/js/libs/event.js"></script>
+
+    <script type="text/javascript">
+      _czc.push(["_setCustomVar","用户名","a313181059",2]);
+      _czc.push(["_setCustomVar","等级","standard",2]);
+
+      (function () {
+        // main config for this page
+        var appConfig = {
+          base: '/static/',
+          middleware: true,
+          debug: true
+        };
+
+        window.process = {
+          env: {
+            NODE_ENV: 'development'
+          }
+        }
+        window.global = {};
+        window.share = {
+          ratioX: null,
+          ratioY: null,
+          event: new EventEmitter()
+        };
+        // semantic 需要
+        Cube.register('jquery', $);
+
+        Cube.init({
+          base: appConfig.base,
+          debug: appConfig.debug,
+          version: 413121779,
+          strict: false,
+          enableCss: true,
+          remoteBase: {
+            'datav': '//resource.datav.aliyun.com/cube/'
+          },
+          timeout: 30000
+        });
+        Cube.use(['/screens/admin/25620/config.js'], function (cfg) {
+          window.screenAlias = '25620';
+          window.share.config = cfg;
+          window.share.screen = cfg.config || {};
+          window.share.id = '25620';
+          window.share.ACLs = {"price":50,"rds":1,"mysql":1,"ads":1,"csv":1,"api":1,"json":1,"database":1,"static":1,"component":0,"screen":5,"template":1,"share":1,"sdk":1};
+          window.share.level = 'standard';
+          window.share.datacenter = 'https://datacenter.datav.aliyun.com/';
+          window.share.screenName = cfg.name;
+          window.share.screen.grid = window.share.screen.grid || 8;
+          window.share.resize = resize;
+          window.share.zoom = 1;
+          window.share.replaceComponent = function(target, data) {
+            window.share.config.scenes[0].layers[0].coms.forEach(function(com, key){
+              if (com.com_id == target) {
+                window.share.config.scenes[0].layers[0].coms[key] = data;
+              }
+            })
+          }
+          window.share.removeComponent = function(target) {
+            _.remove(window.share.config.scenes[0].layers[0].coms, function(com){
+              return com.com_id == target
+            });
+          }
+          document.title = cfg.name;
+          Cube.use('/admin/screen.js', function (SR) {
+            resize();
+            SR(cfg);
+          });
+        });
+
+        var comListUpdating = false;
+        function updateComList(cb) {
+          if(comListUpdating) return;
+          comListUpdating = true;
+          $.getJSON('//component.datav.aliyun.com/cube/list', function(data) {
+            var list = {};
+            comListUpdating = false;
+            data.forEach(function(v) {
+              try {
+                list[v.name] = JSON.parse(v.config);
+                list.version = v.version;
+              } catch(e) {}
+            })
+            window.share.comList = list;
+            cb && cb(null, list);
+          })
+        }
+        window.share.getComList = function(cb){
+          if (window.share.comList) {
+            cb(null, window.share.comList);
+          } else {
+            updateComList(cb)
+          }
+        }
+        updateComList();
+
+        $(window, document).resize(function(){
+          resize();
+        }).load(function(){
+          // $('#preview').css('visibility', 'visible');
+          // resize();
+        });
+
+        function resize() {
+          if (!window.share.screen) return;
+          var wd = $(window);
+          var preview = $('#preview');
+          var previewContainer = $('#previewContainer')
+
+          var width = wd.width() - ($(".react-tabs.editor").is('.switch-on') ? $(".react-tabs.editor").width() : 0);
+          var height = wd.height() - $('#screenNav').height() - 30;
+          var w = window.share.screen.width || preview.width();
+          var h = window.share.screen.height || preview.height();
+          var flag = w / h >= width / height;
+          var ratio;
+          if (flag) {
+            ratio = w && width / w || 1;
+          } else {
+            ratio = h && height / h || 1;
+          }
+          ratio -= 0.05;
+          ratio *= window.share.zoom;
+          $("#leftPanel, #controlPanel").width(width);
+          window.share.getX = function(x) {return x?x/ratio/window.share.zoom:0;}
+          window.share.getY = function(y) {return y?y/ratio/window.share.zoom:0;}
+          window.share.ratio = ratio
+          var scale = ratio*window.share.zoom;
+          preview.css({
+            backgroundSize: "100% 100%",
+          });
+
+          preview.css({
+            transform: "scale("+scale+")",
+          });
+
+          previewContainer.css({
+            paddingTop    : height>h*scale ? (height-h*scale)/2 : 50,
+            paddingLeft   : width>w*scale ? (width-w*scale)/2   : 50,
+            paddingBottom : height<h*scale ? 50                 : 0,
+            paddingRight  : width<w*scale ? 50                  : 0,
+            width         : w*scale,
+            height        : h*scale
+          })
+          $("#pageBar").css({
+            paddingLeft   : width>w*scale ? (width-w*scale)/2   : 50
+          });
+          var editorHeight = wd.innerHeight()-$('header:eq(0)').outerHeight();
+          var panelHeight = editorHeight - $('.ReactTabs__TabList').outerHeight();
+          $('#leftPanel').height(height);
+          $('#controlPanel').css({top: height});
+          $(".ReactTabs.editor").height(editorHeight);
+          $(".ReactTabs__TabPanel").height(panelHeight);
+          window.share.event.emit('ratio-change', {
+            ratioX: window.share.ratio,
+            ratioY: window.share.ratio
+          })
+        }
+      })();
+    </script>
+
+  </body>
+</html>

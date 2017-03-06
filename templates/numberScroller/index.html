@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>演示：jQuery+PHP动态数字展示效果</title>
+<link rel="stylesheet" href="http://www.helloweba.com/demo/css/main.css" />
+<script type="text/javascript" src="http://libs.useso.com/js/jquery/1.7.2/jquery.min.js"></script>
+<style type="text/css">
+.demo{width:320px; margin:20px auto 0 auto; }
+.count{margin-top:50px;font-size:32px; }
+#number{font-size:42px;text-shadow: 0 -1px 0 #72a441;color:#360;font-weight:700;}
+#number1{font-size:42px;text-shadow: 0 -1px 0 #72a441;color:#360;font-weight:700;}
+</style>
+</head>
+
+<body>
+<div id="header">
+   <div id="logo"><h1><a href="/" title="返回helloweba首页">helloweba</a></h1></div>
+</div>
+
+<div id="main">
+   <h2 class="top_title"><a href="">电商交易量实时展示</a></h2>
+  
+   <div class="demo">
+		<div class="count">累计交易金额：<span id="number"></span></div>
+         <div class="count">累计交易金额：<span id="number1"></span></div>
+   </div>
+  
+  <br/>
+</div>
+<script>
+function magic_number(value) {
+	var num = $("#number");
+    num.animate({count: value}, {
+        duration: 500,
+        step: function() {
+            num.text(String(parseInt(this.count)));
+		}
+	});
+};
+
+function update() {
+    $.getJSON("http://10.0.1.200/number.php?jsonp=?", function(data) {
+		magic_number(data.n);
+    });
+};
+
+setInterval(update, 3000);
+update();
+</script>
+
+<script>
+function magic_number1(value) {
+	var num = $("#number1");
+    num.animate({count: value}, {
+        duration: 500,
+        step: function() {
+            num.text(String(parseInt(this.count)));
+		}
+	});
+};
+
+function update() {
+    $.getJSON("http://10.0.1.200/number.php?jsonp=?", function(data) {
+		magic_number1(data.n);
+    });
+};
+
+setInterval(update, 3000);
+update();
+</script>
+
+
+</body>
+</html>

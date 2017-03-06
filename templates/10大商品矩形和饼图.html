@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+
+
+</head>
+<body style="height: 100%; margin: 0;background-color: #1B1B1B">
+
+<div id="10da1" style="height: 100%"></div>
+
+<h1 id="jwh" style="height: 100px;color: #fff;z-index: 9;position: absolute;top: 100px;left: 900px"></h1>
+<h1 id="jwh1" style="height: 100px;color: #fff;z-index: 9;position: absolute;top: 500px;left: 900px"></h1>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+<script type="text/javascript"
+        src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+
+<script type="text/javascript">
+    function shidagoods() {
+
+
+    var dom = document.getElementById("10da1");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    app.title = '10大商品矩形和饼图';
+
+    var charts ={{ charts|safe }};
+    var all ={{ all|safe }};
+    var components ={{ components|safe }};
+
+    var builderJson = {
+        "all": all,//10887,
+        "charts": charts/*{
+         "map": 3237,
+         "lines": 2164,
+         "bar": 7561,
+         "line": 7778,
+         "pie": 7355,
+         "scatter": 2405,
+         "candlestick": 1842,
+         "radar": 2090,
+         "heatmap": 1762,
+         "treemap": 1593,
+         "graph": 2060,
+         "boxplot": 1537,
+         "parallel": 1908,
+         "gauge": 2107,
+         "funnel": 1692,
+         "sankey": 1568
+         }*/,
+
+        "components": components /*{
+         "geo": 2788,
+         "title": 9575,
+         "legend": 9400,
+         "tooltip": 9466,
+         "grid": 9266,
+         "markPoint": 3419,
+         "markLine": 2984,
+         "timeline": 2739,
+         "dataZoom": 2744,
+         "visualMap": 2466,
+         "toolbox": 3034,
+         "polar": 1945
+         }*/,
+
+
+    };
+
+    var downloadJson = charts/*{
+     "echarts.min.js": 17365,
+     "echarts.simple.min.js": 4079,
+     "echarts.common.min.js": 6929,
+     "echarts.js": 14890
+     }*/;
+
+    var themeJson = components/*{
+     "dark.js": 1594,
+     "infographic.js": 925,
+     "shine.js": 1608,
+     "roma.js": 721,
+     "macarons.js": 2179,
+     "vintage.js": 1982
+     }*/;
+
+    var waterMarkText = ' ';
+
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+    canvas.width = canvas.height = 100;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.globalAlpha = 0.08;
+    ctx.font = '20px Microsoft Yahei';
+    ctx.translate(50, 50);
+    ctx.rotate(-Math.PI / 4);
+    ctx.fillText(waterMarkText, 0, 0);
+
+    option = {
+        backgroundColor: {
+            type: 'pattern',
+            image: canvas,
+            repeat: 'repeat'
+        },
+        tooltip: {},
+        title: [{
+            text: '10大商品矩形和饼图',
+            //subtext: '总计 ' + builderJson.all,
+            x: '25%',
+            textAlign: 'center',
+            textStyle: {color: "#65fb97"},
+        }, {
+            text: '商品大类',
+            /*subtext: '总计 ' + Object.keys(downloadJson).reduce(function (all, key) {
+             return all + downloadJson[key];
+             }, 0),*/
+            x: '75%',
+
+            textStyle: {color: "#65fb97"},
+            textAlign: 'center'
+        }, {
+            text: '商品小类',
+            /*subtext: '总计 ' + Object.keys(themeJson).reduce(function (all, key) {
+             return all + themeJson[key];
+             }, 0),*/
+            x: '75%',
+            y: '50%',
+            textStyle: {color: "#65fb97"},
+            textAlign: 'center'
+        }],
+        grid: [{
+            top: 50,
+            width: '50%',
+            bottom: '45%',
+            left: 10,
+            containLabel: true
+        }, {
+            top: '55%',
+            width: '50%',
+            bottom: 0,
+            left: 10,
+            containLabel: true
+        }],
+        xAxis: [{
+            type: 'value',
+            axisLine: {
+                lineStyle: {
+                    color: '#c7d0d4',
+                    width: 2
+                }
+            },
+            max: builderJson.all,
+
+            splitLine: {
+                show: false
+            }
+        }, {
+            type: 'value',
+            axisLine: {
+                lineStyle: {
+                    color: '#c7d0d4',
+                    width: 2
+                }
+            },
+            max: builderJson.all,
+
+            gridIndex: 1,
+            splitLine: {
+                show: false
+            }
+        }],
+        yAxis: [{
+            type: 'category',
+
+            data: Object.keys(builderJson.charts),
+            axisLabel: {
+                interval: 0,
+                rotate: 30
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#b2a2f7',
+                    width: 2
+                }
+            },
+            splitLine: {
+                show: false
+            }
+        }, {
+            gridIndex: 1,
+            type: 'category',
+            axisLine: {
+                lineStyle: {
+                    color: '#b2a2f7',
+                    width: 2
+                }
+            },
+            data: Object.keys(builderJson.components),
+            axisLabel: {
+                interval: 0,
+                rotate: 30
+            },
+            splitLine: {
+                show: false
+            }
+        }],
+        series: [{
+            type: 'bar',
+            stack: 'chart',
+            z: 3,
+            label: {
+                normal: {
+                    position: 'right',
+                    show: true
+                }
+            },
+            data: Object.keys(builderJson.charts).map(function (key) {
+                return builderJson.charts[key];
+            }), itemStyle: {normal: {color: '#65fb97'}}
+        }, {
+            type: 'bar',
+            stack: 'chart',
+            silent: true,
+            itemStyle: {
+                normal: {
+                    color: 'black'
+                }
+            },
+            data: Object.keys(builderJson.charts).map(function (key) {
+                return builderJson.all - builderJson.charts[key];
+            })
+        }, {
+            type: 'bar',
+            stack: 'component',
+            xAxisIndex: 1,
+            yAxisIndex: 1,
+            z: 3,
+            label: {
+                normal: {
+                    position: 'right',
+                    show: true
+                }
+            },
+            data: Object.keys(builderJson.components).map(function (key) {
+                return builderJson.components[key];
+            }), itemStyle: {normal: {color: '#85cee9'}}
+        }, {
+            type: 'bar',
+            stack: 'component',
+            silent: true,
+            xAxisIndex: 1,
+            yAxisIndex: 1,
+            itemStyle: {
+                normal: {
+                    color: '1B1B1B'
+                }
+            },
+            data: Object.keys(builderJson.components).map(function (key) {
+                return builderJson.all - builderJson.components[key];
+            })
+        }, {
+            type: 'pie',
+            radius: [0, '43%'],
+            center: ['75%', '25%'],
+            data: Object.keys(downloadJson).map(function (key) {
+                return {
+                    name: key.replace('.js', ''),
+                    value: downloadJson[key]
+                }
+            })
+        }, {
+            type: 'pie',
+            radius: [0, '43%'],
+            center: ['75%', '75%'],
+            data: Object.keys(themeJson).map(function (key) {
+                return {
+                    name: key.replace('.js', ''),
+                    value: themeJson[key]
+                }
+            })
+        }]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+
+    };
+
+
+
+
+    var data = charts;
+
+    var data1 = [];
+    for (var k in data) {
+        data1.push(k)
+    }
+    var jiang = document.getElementById("jwh");
+    var i = 0;
+    function aaa() {
+
+
+        var j = 0;
+        setInterval(function () {
+            if (j == data1.length) {
+                j = 0;
+            }
+
+            jiang.innerHTML = data1[j] + '<br>' + data[data1[j]];
+            console.log(data1[j]);
+            j++;
+
+        }, 3000);
+
+        // i++;
+    }
+    aaa();
+
+
+
+
+
+    var data2 = components;
+
+    var data3 = [];
+    for (var k1 in data2) {
+        data3.push(k1)
+    }
+    var jiang1 = document.getElementById("jwh1");
+    var i = 0;
+    function bbb() {
+
+
+        var j = 0;
+        setInterval(function () {
+            if (j == data3.length) {
+                j = 0;
+            }
+
+            jiang1.innerHTML = data3[j] + '<br>' + data2[data3[j]];
+            console.log(data3[j]);
+            j++;
+
+        }, 3000);
+
+        // i++;
+    }
+    bbb();
+    }
+shidagoods()
+</script>
+
+
+
+
+</body>
+</html>
+
+

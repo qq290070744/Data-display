@@ -1,0 +1,277 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!--<meta http-equiv="Refresh" content="300; Url=#">-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>电商交易量实时展示</title>
+
+    <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+    <style type="text/css">
+        ${demo.css},
+        .count {
+            margin-top: 50px;
+            font-size: 32px;
+        }
+
+        #number {
+            font-size: 42px;
+            text-shadow: 0 -1px 0 #72a441;
+            color: #360;
+            font-weight: 700;
+        }
+
+        #number1 {
+            font-size: 42px;
+            text-shadow: 0 -1px 0 #72a441;
+            color: #360;
+            font-weight: 700;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var time_list ={{ time_list|safe }};
+        var rmb_list ={{ rmb_list|safe }};
+        var num_list ={{ num_list|safe }};
+
+    </script>
+
+
+</head>
+<body style="background-color: #999999">
+<script src="/static/js/Highcharts.js"></script>
+<script src="http://cdn.hcharts.cn/highcharts/highcharts-more.js"></script>
+<script src="/static/js/exporting.js"></script>
+<div>
+
+
+    <div class="count" style="text-align: center">当天累计交易金额：<span id="number"></span>元</div>
+    <div class="count" style="text-align: center">当天累计交易订单数：<span id="number1"></span>笔</div>
+    <div style="height: 150px"></div>
+    <!--<div id="container1" style="min-width:400px;height:100%"></div>-->
+    <!--<div id="container2" style="min-width:400px;height:400px"></div>-->
+    <div id="container10" style="height: 600px"></div>
+    <!--<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <div style="height: 10px"></div>
+    <!--<div id="container3" style="min-width:400px;height:400px"></div>-->
+</div>
+<script>
+    function magic_number(value) {
+        var num = $("#number");
+        num.animate({count: value}, {
+            duration: 500,
+            step: function () {
+                num.text(String(parseInt(this.count)));
+            }
+        });
+    }
+    ;
+
+    function update() {
+        $.getJSON("http://121.201.68.21:8080/number.php?jsonp=?", function (data) {
+            magic_number(data.n);
+        });
+    }
+    ;
+
+    setInterval(update, 3000);
+    update();
+</script>
+
+<script>
+    function magic_number1(value) {
+        var num = $("#number1");
+        num.animate({count: value}, {
+            duration: 500,
+            step: function () {
+                num.text(String(parseInt(this.count)));
+            }
+        });
+    }
+    ;
+
+    function update() {
+        $.getJSON("http://121.201.68.21:8080/number1.php?jsonp=?", function (data) {
+            magic_number1(data.n);
+        });
+    }
+    ;
+
+    setInterval(update, 3000);
+    update();
+</script>
+
+
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+<script type="text/javascript"
+        src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        // 字典 dict
+        var auto = function () {
+            $.getJSON('/real_time_time_list/', function (trn_list) {
+                //返回值  在这里是一个数组
+                //for (var i in ret) {console.log(ret[i]);}
+                dsjysszs(trn_list[0], trn_list[1], trn_list[2]);
+                console.log(trn_list);
+
+
+            });
+        };
+
+        setInterval(auto, 180000);
+         });
+        function dsjysszs(time_list, rmb_list, num_list) {
+
+
+            var dom = document.getElementById("container10");
+            var myChart = echarts.init(dom);
+            var app = {};
+            option = null;
+
+            function maxrmb() {
+                var maxrmb_list = [];
+                for (var index in rmb_list) {
+                    maxrmb_list.push(rmb_list[index]);
+                }
+
+                for (var x = 0; x <= maxrmb_list.length; x++) {
+                    for (var y = 0; y <= maxrmb_list.length - x - 1; y++) {
+                        if (maxrmb_list[y] > maxrmb_list[y + 1]) {
+                            var tmp = maxrmb_list[y];
+                            maxrmb_list[y] = maxrmb_list[y + 1];
+                            maxrmb_list[y + 1] = tmp;
+                        }
+                    }
+                }
+                return maxrmb_list[maxrmb_list.length - 1];
+
+            }
+
+            var maxrmb = maxrmb();
+
+            function maxnum() {
+                var maxnum_list = [];
+                for (var index in num_list) {
+                    maxnum_list.push(num_list[index]);
+                }
+
+                for (var x = 0; x <= maxnum_list.length; x++) {
+                    for (var y = 0; y <= maxnum_list.length - x - 1; y++) {
+                        if (maxnum_list[y] > maxnum_list[y + 1]) {
+                            var tmp = maxnum_list[y];
+                            maxnum_list[y] = maxnum_list[y + 1];
+                            maxnum_list[y + 1] = tmp;
+                        }
+                    }
+                }
+                return maxnum_list[maxnum_list.length - 1];
+
+            }
+
+            var maxnum = maxnum();
+
+            app.title = '多 Y 轴示例';
+
+            var colors = ['#5793f3', '#d14a61', '#675bba'];
+
+            var option = {
+                color: colors,
+
+                tooltip: {
+                    trigger: 'axis'
+                },
+                title: {
+                    text: '电商交易量实时展示',
+                    left: 'center',
+                    top: ''
+                },
+                grid: {
+                    right: '20%'
+                },
+                toolbox: {
+                    feature: {
+                        dataView: {show: true, readOnly: false},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                legend: {
+                    data: ['交易金额', '交易订单数'],
+                    top: '40px'
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        axisTick: {
+                            alignWithLabel: true
+                        },
+                        data: time_list//['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '交易金额',
+                        min: 0,
+                        max: maxrmb,
+                        position: 'right',
+                        axisLine: {
+                            lineStyle: {
+                                color: colors[0]
+                            }
+                        },
+                        axisLabel: {
+                            formatter: '{value} 元'
+                        }
+                    },
+                    {},
+                    {
+                        type: 'value',
+                        name: '交易订单数',
+                        min: 0,
+                        max: maxnum,
+                        position: 'left',
+                        axisLine: {
+                            lineStyle: {
+                                color: colors[2]
+                            }
+                        },
+                        axisLabel: {
+                            formatter: '{value} 笔'
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name: '交易金额',
+                        type: 'bar',
+                        data: rmb_list//[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+                    },
+
+                    {
+                        name: '交易订单数',
+                        type: 'line',
+                        yAxisIndex: 2,
+                        data: num_list//[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+                    }
+                ]
+            };
+
+
+            if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+            }
+
+        }
+
+        dsjysszs(time_list, rmb_list, num_list);
+
+</script>
+</body>
+</html>

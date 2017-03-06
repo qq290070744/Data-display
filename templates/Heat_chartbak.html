@@ -1,0 +1,292 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Refresh" content="60; Url=#">
+    <title>访问来源ip数量各省地理区域热力图</title>
+
+    <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+    <style type="text/css">
+        ${demo.css}
+    </style>
+    <script type="text/javascript">
+        $(function () {
+
+            var ipdict ={{ ipdict|safe }};
+
+            // Prepare demo data
+            var data = [{
+                "hc-key": "tw-ph",//台湾
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-km",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-lk",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-tw",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-cs",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-kh",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-hs",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-hh",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-cl",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-ml",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-ty",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-cg",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-hl",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-th",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-nt",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-yl",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-pt",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-tt",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-tn",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-il",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-tp",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "tw-ch",
+                "value": ipdict["台湾"]
+            }, {
+                "hc-key": "cn-6660",//香港
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-6661",
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-6662",
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-6664",
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-6668",
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-3664",
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-6657",
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-6663",
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-6665",
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-6666",
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-6667",
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-6669",
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-6670",
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-6671",
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-3682",
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-6655",
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-6656",
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-6658",
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-6659",
+                "value": ipdict["香港"]
+            }, {
+                "hc-key": "cn-3681",//澳门
+                "value": ipdict["澳门"]
+            }, {
+                "hc-key": "cn-sh",//上海
+                "value": ipdict["上海"]
+            }, {
+                "hc-key": "cn-zj",//浙江
+                "value": ipdict["浙江"]
+            }, {
+                "hc-key": "cn-fj",//福建
+                "value": ipdict["福建"]
+            }, {
+                "hc-key": "cn-gd",//广东
+                "value": ipdict["广东"]
+            }, {
+                "hc-key": "cn-yn",//云南
+                "value": ipdict["云南"]
+            }, {
+                "hc-key": "cn-xz",//西藏
+                "value": ipdict["西藏"]
+            }, {
+                "hc-key": "cn-nx",//宁夏
+                "value": ipdict["宁夏"]
+            }, {
+                "hc-key": "cn-sa",//陕西
+                "value": ipdict["陕西"]
+            }, {
+                "hc-key": "cn-ah",//安徽
+                "value": ipdict["安徽"]
+            }, {
+                "hc-key": "cn-hu",//湖北
+                "value": ipdict["湖北"]
+            }, {
+                "hc-key": "cn-cq",//重庆
+                "value": ipdict["重庆"]
+            }, {
+                "hc-key": "cn-hn",//湖南
+                "value": ipdict["湖南"]
+            }, {
+                "hc-key": "cn-bj",//北京
+                "value": ipdict["北京"]
+            }, {
+                "hc-key": "cn-hb",//河北
+                "value": ipdict["河北"]
+            }, {
+                "hc-key": "cn-sd",//山东
+                "value": ipdict["山东"]
+            }, {
+                "hc-key": "cn-tj",//天津
+                "value": ipdict["天津"]
+            }, {
+                "hc-key": "cn-ha",//海南
+                "value": ipdict["海南"]
+            }, {
+                "hc-key": "cn-jl",//吉林
+                "value": ipdict["吉林"]
+            }, {
+                "hc-key": "cn-qh",//青海
+                "value": ipdict["青海"]
+            }, {
+                "hc-key": "cn-xj",//新疆
+                "value": ipdict["新疆"]
+            }, {
+                "hc-key": "cn-nm",//内蒙
+                "value": ipdict["内蒙"]
+            }, {
+                "hc-key": "cn-hl",//黑龙江
+                "value": ipdict["黑龙江"]
+            }, {
+                "hc-key": "cn-sc",//四川
+                "value": ipdict["四川"]
+            }, {
+                "hc-key": "cn-gz",//贵州
+                "value": ipdict["贵州"]
+            }, {
+                "hc-key": "cn-gx",//广西
+                "value": ipdict["广西"]
+            }, {
+                "hc-key": "cn-ln",//辽宁
+                "value": ipdict["辽宁"]
+            }, {
+                "hc-key": "cn-js",//江苏
+                "value": ipdict["江苏"]
+            }, {
+                "hc-key": "cn-gs",//甘肃
+                "value": ipdict["甘肃"]
+            }, {
+                "hc-key": "cn-sx",//山西
+                "value": ipdict["山西"]
+            }, {
+                "hc-key": "cn-he",//河南
+                "value": ipdict["河南"]
+            }, {
+                "hc-key": "cn-jx",//江西
+                "value": ipdict["江西"]
+            }];
+
+            // Initiate the chart
+            $('#container').highcharts('Map', {
+
+                title: {
+                    text: '访问来源ip数量各省区域热力图 2017-02-13'
+                },
+
+                subtitle: {
+                    text: 'Source map: <a href="https://code.highcharts.com/mapdata/countries/cn/custom/cn-all-sar-taiwan.js">香港，台湾在地图上按照区县分割板块，但是显示的数量为全香港特区或者全台湾省的数量</a>'
+                },
+
+                mapNavigation: {
+                    enabled: true,
+                    buttonOptions: {
+                        verticalAlign: 'bottom'
+                    }
+                },
+
+                colorAxis: {
+                    min: 0,
+                    minColor: '#00EC00',
+                    maxColor: '#CE0000'
+                },
+
+                series: [{
+                    data: data,
+                    mapData: Highcharts.maps['countries/cn/custom/cn-all-sar-taiwan'],
+                    joinBy: 'hc-key',
+                    name: '来访IP数量',
+                    states: {
+                        hover: {
+                            color: '#000000'
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}'
+                    }
+                }]
+            });
+        });
+    </script>
+</head>
+<body>
+<script src="http://cdn.hcharts.cn/highmaps/highmaps.js"></script>
+<script src="http://cdn.hcharts.cn/highmaps/modules/data.js"></script>
+<script src="/static/js/cn-all-sar-taiwan.js"></script>
+<!--<script src="https://code.highcharts.com/mapdata/countries/cn/custom/cn-all-sar-taiwan.js"></script>-->
+
+
+<div id="container" style="height: 900px; min-width: 500px; max-width: 1100px; margin: 0 auto"></div>
+
+</body>
+</html>

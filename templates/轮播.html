@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Swiper demo</title>
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="http://www.swiper.com.cn/dist/css/swiper.min.css">
+    <!-- Demo styles -->
+    <style>
+        .swiper-container {
+            width: 200px;
+            height: 100px;
+
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: red;
+
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+    </style>
+</head>
+<body>
+<!-- Swiper -->
+    <div class="swiper-container">
+        <div id="jwh" class="swiper-wrapper">
+            <div class="swiper-slide">123456</div>
+            <div class="swiper-slide">789</div>
+
+        </div>
+        <!-- Add Pagination
+        <div class="swiper-pagination"></div>-->
+        <!-- Add Arrows -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+    <!-- Swiper JS -->
+    <script src="http://www.swiper.com.cn/dist/js/swiper.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        paginationClickable: true,
+        spaceBetween: 30,
+        centeredSlides: true,
+        autoplay: 2500,
+        autoplayDisableOnInteraction: false
+    });
+
+
+
+    </script>
+
+
+
+
+
+
+
+<h1 id="jiang"></h1>
+
+<script>
+    var jwh =document.getElementById("jwh");
+    var data = {
+        "a": 1594,
+        "b": 925,
+        "c": 1608,
+        "d": 721,
+        "e": 2179,
+        "f": 1982
+    };
+    var data1 = ["a", "b", "c", "d", "e", "f"];
+    var jiang =document.getElementById("jiang");
+    var i = 0;
+    function aaa() {
+
+
+        var j = 0;
+        setInterval(function () {
+            if(j==data1.length){
+                j=0;
+            }
+            var div1=document.createElement('div');
+            jwh.appendChild(div1);
+            div1.setAttribute('class','swiper-slide');
+            div1.innerHTML=data1[j]+'-------'+data[data1[j]];
+            jiang.innerHTML=data1[j]+'-------'+data[data1[j]];
+            console.log(data1[j]);
+            j++;
+
+        }, 1000);
+
+        // i++;
+    }
+    aaa()
+
+</script>
+
+
+</body>
+</html>

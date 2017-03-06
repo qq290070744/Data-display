@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>前10</title>
+    <!-- 引入 echarts.js -->
+    <script src="/static/js/echarts.min.js"></script>
+    <style type="text/css">
+        .img {
+            background: red;
+        }
+    </style>
+</head>
+<body style="background-color: white">
+
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="10da" style="height:1000px;width: 100%"></div>
+
+<script type="text/javascript">
+
+
+    var goods_list ={{ goods_list|safe }};
+    var goods_and_rmb ={{ goods_and_rmb|safe }};
+    var commodity_categories ={{ commodity_categories |safe }};
+
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('10da'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        title: {
+            text: '10大商品种类',
+            subtext: '',
+            x: 'center',
+            y: 'top',
+            textAlign: 'left'
+        },
+        legend: {
+            orient: 'vertical',
+            x: 'left',
+            data: goods_list//['直达','营销广告','搜索引擎','邮件营销','联盟广告','视频广告','百度','谷歌','必应','其他']
+        },
+        series: [
+            {
+                name: '商品大类百分比',
+                type: 'pie',
+                selectedMode: 'single',
+                radius: [0, '30%'],
+
+                label: {
+                    normal: {
+                        position: 'inner'
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data: commodity_categories/*[
+             {value:335, name:'运动服饰', selected:true},
+             { name:'智能手机',value:679},
+             {value:1548, name:'运动鞋包'}
+
+             ]*/
+            },
+            {
+                name: '商品小类占比',
+                type: 'pie',
+                radius: ['40%', '55%'],
+
+                data: goods_and_rmb/*[
+             {value:335, name:'运动裤'},
+             {value:310, name:'iPhone6'},
+             {value:234, name:'iPhone7'},
+             {value:135, name:'iPhone8'},
+             {value:1048, name:'跑步鞋'},
+             {value:251, name:'篮球鞋'},
+             {value:147, name:'休闲鞋'},
+             {value:102, name:'其他'}
+             ]*/
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</body>
+</html>

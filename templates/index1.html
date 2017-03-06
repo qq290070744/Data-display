@@ -1,0 +1,173 @@
+
+<!doctype html>
+<html>
+    <head>
+        <title>点击次数各省统计饼图</title>
+       <meta charset="utf-8">
+        <style>
+         /* css 代码  */
+            .dianji{
+                text-align: center;
+                background-color: #32CD32;
+            }
+            .right{
+                float: right;
+            }
+            .sousuo{
+                position: fixed;
+                right: 100px;
+                top: 50px;
+                border: 1px olivedrab solid;
+                height: 50px;
+            }
+            .sousuo input[type=submit]{
+                height: 50px;
+                border: none;
+                color: brown;
+                background-color: olivedrab;
+                font-family: 微软雅黑;
+                font-size: 20px;
+            }
+        </style>
+
+        <script src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+        <script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+        <script src="http://cdn.hcharts.cn/highcharts/modules/exporting.js"></script>
+        <script src="http://cdn.hcharts.cn/highcharts/modules/data.js"></script>
+
+	   <link   href="http://cdn.bootcss.com/twitter-bootstrap/2.2.2/css/bootstrap.min.css" rel="stylesheet">
+	  <!-- <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script> -->
+	   <script src="http://cdn.bootcss.com/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+	   <link rel="stylesheet" type="text/css" media="screen" href="http://www.bootcss.com/p/bootstrap-datetimepicker/bootstrap-datetimepicker/css/datetimepicker.css">
+	   <script type="text/javascript" src="http://www.bootcss.com/p/bootstrap-datetimepicker/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    </head>
+
+    <body>
+	<form class="sousuo right" method="POST" action="/ip">
+                <input id="csrf_token" name="csrf_token" type="hidden" value="1486957428##60a8a85b03ebe88413a4cba887846d26695494a6">
+	      <div class="input-append date form_datetime" >
+		  <input style="height: 40px;" id="user" name="user" size="20" type="text" value="">
+		  <span style="height: 41px;line-height: 40px;border: none" class="add-on"><i class="icon-remove"></i></span>
+		  <span style="height: 41px;line-height: 40px;border: none" class="add-on"><i class="icon-calendar"></i></span>
+	          <input type="submit" value="提交">
+	      </div>
+        </form>
+
+<!--<h2 class="dianji" >点击次数各省统计, 2017-02-12</h2>-->
+<div id="container1" style="width:1000px">
+<div id="header" style="background-color:#32CD32;"></div>
+    <!--<div id="menu" style="height:750px;width:200px;float:right;">
+total,106562220<br>湖北省,16326296<br>广东省,14302610<br>福建省,11598604<br>山东省,7485930<br>河南省,6093280<br>江苏省,5752630<br>浙江省,5046682<br>北京市,4551786<br>四川省,4248710<br>安徽省,3788258<br>山西省,3280822<br>广西壮族自治区,3032278<br>江西省,2877156<br>河北省,2298420<br>上海市,1957164<br>湖南省,1731264<br>辽宁省,1595788<br>重庆市,1405880<br>陕西省,1344274<br>内蒙古自治区,1277742<br>天津市,1275198<br>黑龙江省,895452<br>unknown,872264<br>吉林省,728742<br>海南省,691110<br>贵州省,642348<br>甘肃省,606924<br>云南省,410140<br>宁夏回族自治区,196072<br>新疆维吾尔自治区,151956<br>青海省,62442<br>西藏自治区,20214<br>香港特别行政区,10326<br>台湾省,2782<br>澳门特别行政区,676<br>
+    </div>-->
+
+    <div id="content2" style="width: 100%; height: 800px; float:right;text-align:center;position: relative;left: 400px"></div>
+<div id="footer" style="background-color:#32CD32;clear:both;text-align:center;"></div>
+                <script>
+function GetDateStr(AddDayCount) {
+        var dd = new Date();
+        dd.setDate(dd.getDate()+AddDayCount);
+        var y = dd.getFullYear();
+        var m = dd.getMonth()+1;
+        var d = dd.getDate();
+        return y+"-"+m+"-"+d;
+        }
+
+        user.value=GetDateStr(-1);
+
+        $(".form_datetime").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: 2,
+            autoclose: true,
+            todayBtn: true,
+            startDate: "2016-11-1",
+            minuteStep: 10
+        });
+
+$(function () {
+    $('#content2').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'haproxy日志点击次数各省比例饼图,2017-02-12'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                },
+                showInLegend: true
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Browser share',
+            data: [["湖北省",16326296],["广东省",14302610],["福建省",11598604],["山东省",7485930],["河南省",6093280],["江苏省",5752630],["浙江省",5046682],["北京市",4551786],["四川省",4248710],["安徽省",3788258],["山西省",3280822],["广西壮族自治区",3032278],["other",21054334] ]
+
+        }]
+    });
+});
+                </script>
+</div>
+  </body>
+
+    <body>
+ <div style="height: 100px"></div>
+<!--<h2 class="dianji" style="margin-bottom:0;background-color:#32CD32">访问来源ip各省统计, 2017-02-12</h2>-->
+<div id="container2" style="width:1000px">
+<div id="header" style="background-color:#32CD32;"></div>
+<!--<div id="menu" style="height:750px;width:200px;float:left;">   total,34108<br>广东省,4718<br>湖北省,4105<br>福建省,2548<br>山东省,2526<br>河南省,2159<br>江苏省,1776<br>四川省,1673<br>浙江省,1642<br>北京市,1536<br>安徽省,1196<br>山西省,1138<br>江西省,1019<br>广西壮族自治区,991<br>上海市,823<br>河北省,797<br>湖南省,754<br>辽宁省,632<br>unknown,564<br>陕西省,495<br>内蒙古自治区,479<br>天津市,463<br>重庆市,360<br>黑龙江省,285<br>吉林省,254<br>贵州省,238<br>甘肃省,222<br>云南省,206<br>海南省,201<br>宁夏回族自治区,140<br>新疆维吾尔自治区,103<br>青海省,32<br>西藏自治区,15<br>台湾省,10<br>香港特别行政区,7<br>澳门特别行政区,1<br> </div>-->
+<div id="content" style="width: 100%; height: 800px; float:right;text-align:center;position: relative;left: 400px"></div>
+<div id="footer" style="background-color:#32CD32;clear:both;text-align:center;"></div>
+		<script>
+$(function () {
+    $('#content').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'haproxy日志访问来源ip各省比例饼图,2017-02-12'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                },
+                showInLegend: true
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Browser share',
+            data: [["广东省",4718],["湖北省",4105],["福建省",2548],["山东省",2526],["河南省",2159],["江苏省",1776],["四川省",1673],["浙江省",1642],["北京市",1536],["安徽省",1196],["山西省",1138],["江西省",1019],["other",8072] ]
+
+        }]
+    });
+});
+		</script>
+</div>
+  </body>
+
+</html>

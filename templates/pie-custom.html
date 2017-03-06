@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Refresh" content="300; Url=#">
+</head>
+<body style="height: 100%; margin: 0;">
+<div id="container10dada" style="height: 100%;"></div>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+<script type="text/javascript"
+        src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+
+<script type="text/javascript">
+    var data={{ charts|safe }};
+    var All={{ All|safe }};
+
+    /*data=[
+                    {value: 335, name: '直接访问'},
+                    {value: 310, name: '邮件营销'},
+                    {value: 274, name: '联盟广告'},
+                    {value: 235, name: '视频广告'},
+                    {value: 4000, name: '搜索引擎'}
+                ]*/
+
+    //10大商品饼图大类
+    var dom = document.getElementById("container10dada");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+        //backgroundColor: 'black',
+
+        title: {
+            text: '商品种类百分比',
+            left: 'center',
+            top: '50',
+            textStyle: {
+                color: 'pink'
+            }
+        },
+
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+
+        visualMap: {
+            show: true,
+            min: 80,
+            max: All/1.5,
+            inRange: {
+                colorLightness: [1, 0.8]
+            }
+        },
+        series: [
+            {
+                name: '商品大类占比',
+
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '60%'],
+                data: data.sort(function (a, b) {
+                    return a.value - b.value
+                }),
+                roseType: 'angle',
+                label: {
+                    normal: {
+                        textStyle: {
+                            color: '#f6f6ed'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        lineStyle: {
+                            color: 'white'
+                        },
+                        smooth: 0.2,
+                        length: 10,
+                        length2: 20
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: '#fbffdc',
+                        shadowBlur: 200,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                },
+
+                animationType: 'scale',
+                animationEasing: 'elasticOut',
+                animationDelay: function (idx) {
+                    return Math.random() * 200;
+                }
+            }
+        ]
+    };
+    ;
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+</script>
+</body>
+</html>

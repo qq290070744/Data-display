@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <!--<meta http-equiv="Refresh" content="300; Url=#">-->
+    <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+<div id="container" style="height: 100%"></div>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+<script type="text/javascript"
+        src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    var option = null;
+    var time_list ={{ time_list|safe }};
+    var SSO_li ={{ SSO_li|safe }};
+    var shg_li ={{ shg_li|safe  }};
+    var ds_li ={{ ds_li|safe }};
+    var NET_li ={{ NET_li|safe }};
+
+    $(document).ready(function () {
+        // 字典 dict
+        var auto = function () {
+            $.getJSON('/business_real_time_accesss_ajax/', function (tssnd) {
+                //返回值  在这里是一个数组
+                //for (var i in ret) {console.log(ret[i]);}
+
+                console.log(tssnd);
+                ywssfwl(tssnd[0],tssnd[1],tssnd[2],tssnd[3],tssnd[4])
+
+            });
+        };
+        setInterval(auto, 120000);
+    });
+
+    function ywssfwl(time_list, NET_li, SSO_li, ds_li, shg_li) {
+        var option = {
+            title: {
+                text: '各个业务间隔5分钟实时访问量图',
+                y: 'top',
+                x: 'center',
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['.NET', 'SSO', '电商', '生活馆',],
+                y: '4%',
+                x: 'center',
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: time_list//['周一','周二','周三','周四','周五','周六','周日']
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+
+
+                {
+                    name: '.NET',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {normal: {}},
+                    data: NET_li//[320, 332, 301, 334, 390, 330, 320]
+                },
+                {
+                    name: 'SSO',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {normal: {}},
+                    data: SSO_li//[120, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name: '电商',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {normal: {}},
+                    data: ds_li//[220, 182, 191, 234, 290, 330, 310]
+                }, {
+                    name: '生活馆',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {normal: {}},
+                    data: shg_li//[150, 232, 201, 154, 190, 330, 410]
+                },
+
+
+            ]
+        };
+
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    }
+    ywssfwl(time_list, NET_li, SSO_li, ds_li, shg_li);
+</script>
+</body>
+</html>

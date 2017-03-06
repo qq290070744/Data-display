@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        /* css ´úÂë  */
+        .left {
+            float: left;
+        }
+
+        .right {
+            float: right;
+        }
+
+        .title {
+            text-align: center;
+            color: slategray;
+        }
+
+        .title p {
+            font-family: 黑体;
+            font-size: 13px;
+            color: gray;
+        }
+    </style>
+    <script src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+    <script src="/static/js/Highcharts.js"></script>
+    <script src="/static/js/exporting.js"></script>
+    <script src="http://cdn.hcharts.cn/highcharts/modules/data.js"></script>
+</head>
+<body style="background-color: #ffffaa">
+<div class="title">
+    <h3>各业务每天访问量</h3>
+    <p>数据来源：zabbix数据库</p>
+</div>
+
+<div class="left" id="container1" style="width: 940px; height: 400px"></div>
+<div class="right" id="container2" style="width: 940px; height: 400px"></div>
+<div style="height: 10px"></div>
+<div class="left" id="container3" style="width: 940px; height: 400px"></div>
+<div class="right" id="container4" style="width: 940px; height: 400px"></div>
+
+<script>
+    var shgdate ={{ shgdate|safe }};
+    var shgtraffic ={{ shgtraffic|safe }};
+
+    var dsdate ={{ dsdate|safe }};
+    var dstraffic ={{ dstraffic|safe }};
+
+    var ssodate ={{ ssodate|safe }};
+    var ssotraffic ={{ ssotraffic|safe }};
+
+    var netdate ={{ netdate|safe }};
+    var nettraffic = {{ nettraffic|safe }}
+            $(function () {
+                $('#container1').highcharts({
+                    chart: {
+                        type: 'line',
+                        backgroundColor: 'rgba(255, 255, 255, 0)',
+                        plotBorderColor: null,
+                        plotBackgroundColor: null,
+                        plotBackgroundImage: null,
+                        plotBorderWidth: null,
+                        plotShadow: false
+                    },
+                    title: {
+                        text: ''
+                    },
+                    subtitle: {
+                        text: ''
+                    },
+                    xAxis: {
+                        categories: shgdate// ["17年01月30日","17年01月31日","17年02月01日","17年02月02日","17年02月03日","17年02月04日","17年02月05日","17年02月06日","17年02月07日","17年02月08日","17年02月09日","17年02月10日","17年02月11日","17年02月12日","17年02月13日"]
+                    },
+                    yAxis: {
+                        title: {
+                            text: '次数'
+                        }
+                    },
+                    plotOptions: {
+                        line: {
+                            dataLabels: {
+                                enabled: true
+                            },
+                            enableMouseTracking: false
+                        }
+                    },
+                    series: [{
+                        name: '生活馆',
+                        data: shgtraffic// [17975,18475,19544,21437,22302,26482,21040,19465,20162,18800,19203,20009,21102,21272,20587]
+                    }
+                    ]
+                });
+            });
+    $(function () {
+        $('#container2').highcharts({
+            chart: {
+                type: 'line',
+                backgroundColor: 'rgba(255, 255, 255, 0)',
+                plotBorderColor: null,
+                plotBackgroundColor: null,
+                plotBackgroundImage: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: ''
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: dsdate//["17年01月30日","17年01月31日","17年02月01日","17年02月02日","17年02月03日","17年02月04日","17年02月05日","17年02月06日","17年02月07日","17年02月08日","17年02月09日","17年02月10日","17年02月11日","17年02月12日","17年02月13日"]
+            },
+            yAxis: {
+                title: {
+                    text: '次数'
+                }
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: false
+                }
+            },
+            series: [{
+                name: '电商',
+                data: dstraffic//[50464,55266,75278,90396,147775,435348,98489,99546,120112,108937,121980,111481,120259,84395,84440]
+            }
+            ]
+        });
+    });
+    $(function () {
+        $('#container3').highcharts({
+            chart: {
+                type: 'line',
+                backgroundColor: 'rgba(255, 255, 255, 0)',
+                plotBorderColor: null,
+                plotBackgroundColor: null,
+                plotBackgroundImage: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: ''
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: ssodate// ["17年01月30日","17年01月31日","17年02月01日","17年02月02日","17年02月03日","17年02月04日","17年02月05日","17年02月06日","17年02月07日","17年02月08日","17年02月09日","17年02月10日","17年02月11日","17年02月12日","17年02月13日"]
+            },
+            yAxis: {
+                title: {
+                    text: '次数'
+                }
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: false
+                }
+            },
+            series: [{
+                name: 'SSO',
+                data: ssotraffic// [385571,385409,401364,412088,419740,434073,416757,413372,419604,424429,425936,430895,433777,429339,431881]
+            }
+            ]
+        });
+    });
+    $(function () {
+        $('#container4').highcharts({
+            chart: {
+                type: 'line',
+                backgroundColor: 'rgba(255, 255, 255, 0)',
+                plotBorderColor: null,
+                plotBackgroundColor: null,
+                plotBackgroundImage: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: ''
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: netdate// ["17年01月30日","17年01月31日","17年02月01日","17年02月02日","17年02月03日","17年02月04日","17年02月05日","17年02月06日","17年02月07日","17年02月08日","17年02月09日","17年02月10日","17年02月11日","17年02月12日","17年02月13日"]
+            },
+            yAxis: {
+                title: {
+                    text: '次数'
+                }
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: false
+                }
+            },
+            series: [{
+                name: '.NET',
+                data: nettraffic// [1387451,1401816,1491197,1522773,1573631,1622495,1578663,1569342,1577298,1555473,1555159,1575049,1583792,1586276,1583148]
+            }
+            ]
+        });
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Refresh" content="60; Url=#">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>点击次数和来源ip各省统计图</title>
+
+    <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+    <style type="text/css">
+        ${demo.css}
+
+    </style>
+
+    <script type="text/javascript">
+        var data0 ={{ data|safe }};
+        var data1 ={{ data1|safe }};
+        var total_clicks ={{ total_clicks|safe }};
+
+        var ipdata0 ={{ ipdata|safe }};
+        var ipdata1 ={{ ipdata1|safe }};
+        var iptotal_clicks ={{ iptotal_clicks|safe }};
+
+        var yue1={{ yue}};
+        yue1=yue1+'月';
+        function CurentTime(addtime) {
+            var now = new Date();
+            var year = now.getFullYear();       //年
+            var month = now.getMonth() + 1;     //月
+            //var day = now.getDate();            //日
+
+            //var hh = now.getHours(); //时
+            //var mm = (now.getMinutes() + addtime) % 60;  //分
+           // if ((now.getMinutes() + addtime) / 60 > 1) {
+           //     hh += Math.floor((now.getMinutes() + addtime) / 60);
+          //  }
+
+            var clock = year + "-";
+
+            if (month < 10)
+                clock += "0";
+
+            clock += month //+ "-";
+
+           // if (day < 10)
+            //    clock += "0";
+
+            //clock += day + " ";
+
+            //if (hh < 10)
+            //    clock += "0";
+
+           // clock += hh + ":";
+           // if (mm < 10) clock += '0';
+           // clock += mm;
+            //return (clock);
+            return yue1;
+        }
+
+
+        $(function () {
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'column',
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+
+                    backgroundColor: 'rgba(255, 255, 255, 0)',
+                    plotBorderColor: null,
+                    plotBackgroundImage: null,
+                    borderWidth: 0
+                },
+                title: {
+                    text: '点击次数各省统计矩形图, ' + CurentTime(0) + ' 总数:' + total_clicks
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: data0 //['湖北省',]
+                    ,
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Rainfall ()'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.01,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: '点击次数',
+                    data: data1//[ 16326296.0, 14302610, 11598604, 7485930, 6093280,5752630,5046682,4551786,4248710,3788258,3280822,3032278,2877156,2298420]
+
+                }]
+            });
+        });
+
+
+    </script>
+
+
+</head>
+<body>
+<script src="/static/js/Highcharts.js"></script>
+<script src="/static/js/exporting.js"></script>
+
+
+<!--<script type="text/javascript">
+        var data={{ data|safe }};
+
+        for(var i in data){
+            alert(data[i]);
+
+        }
+        var data1={{ data1|safe }};
+        for(var j in data1){
+            alert(data1[j]);
+        }
+    </script>-->
+<script type="text/javascript">
+    var data3 ={{ data3|safe }};
+    $(function () {
+        Highcharts.chart('container1', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie',
+                backgroundColor: 'rgba(255, 255, 255, 0)',
+                plotBorderColor: null,
+                plotBackgroundImage: null,
+                borderWidth: 0
+            },
+            title: {
+                text: '\n\n\n ' +
+                '点击次数各省统计百分比扇形图, ' + CurentTime(0)
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                name: 'Brands',
+                colorByPoint: true,
+                data: data3 /*[{
+                 name: 'Microsoft Internet Explorer',
+                 y: 56.33
+                 }, {
+                 name: 'Chrome',
+                 y: 24.03,
+                 sliced: true,
+                 selected: true
+                 }, {
+                 name: 'Firefox',
+                 y: 10.38
+                 }, {
+                 name: 'Safari',
+                 y: 4.77
+                 }, {
+                 name: 'Opera',
+                 y: 0.91
+                 }, {
+                 name: 'Proprietary or Undetectable',
+                 y: 0.2
+                 }]*/
+            }]
+        });
+    });
+</script>
+
+<script>
+
+    $(function () {
+        Highcharts.chart('container2', {
+            chart: {
+                type: 'column',
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+
+                backgroundColor: 'rgba(255, 255, 255, 0)',
+                plotBorderColor: null,
+                plotBackgroundImage: null,
+                borderWidth: 0
+            },
+            title: {
+                text: '访问来源ip各省统计矩形图, ' + CurentTime(0) + ' 总数:' + iptotal_clicks
+            },
+            subtitle: {
+                text: 'com'
+            },
+            xAxis: {
+                categories: ipdata0 /*[
+
+                 '湖北省',
+                 '广东省',
+                 '福建省',
+                 '山东省',
+                 '河南省',
+                 '江苏省',
+                 '浙江省',
+                 '北京市',
+                 '四川省',
+                 '安徽省',
+                 '山西省',
+                 '广西壮族自治区',
+                 '江西省',
+                 '河北省',
+                 '上海市'
+
+                 ]*/,
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Rainfall ()'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: '访问来源ip统计',
+                data: ipdata1//[ 16326296.0, 14302610, 11598604, 7485930, 6093280,5752630,5046682,4551786,4248710,3788258,3280822,3032278,2877156,2298420]
+
+            }]
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    var ipdata3 ={{ ipdata3|safe }};
+    $(function () {
+        Highcharts.chart('container3', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+
+
+                type: 'pie',
+                backgroundColor: 'rgba(255, 255, 255, 0)',
+                plotBorderColor: null,
+                plotBackgroundImage: null,
+                borderWidth: 0
+            },
+            title: {
+                text: '访问来源ip各省比例饼图, ' + CurentTime(0)
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                name: 'Brands',
+                colorByPoint: true,
+                data: ipdata3 /*[{
+                 name: 'Microsoft Internet Explorer',
+                 y: 56.33
+                 }, {
+                 name: 'Chrome',
+                 y: 24.03,
+                 sliced: true,
+                 selected: true
+                 }, {
+                 name: 'Firefox',
+                 y: 10.38
+                 }, {
+                 name: 'Safari',
+                 y: 4.77
+                 }, {
+                 name: 'Opera',
+                 y: 0.91
+                 }, {
+                 name: 'Proprietary or Undetectable',
+                 y: 0.2
+                 }]*/
+            }]
+        });
+    });
+
+
+    $(function () {
+        $('#container4').highcharts({
+            chart: {
+                type: 'bar',
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+
+                backgroundColor: 'rgba(255, 255, 255, 0)',
+                plotBorderColor: null,
+                plotBackgroundImage: null,
+                borderWidth: 0
+            },
+            title: {
+                text: '访问来源ip各省统计矩形图, ' + CurentTime(0) + ' 总数:' + iptotal_clicks
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                name: ' ',
+                categories: ipdata0//['Africa', 'America', 'Asia', 'Europe', 'Oceania']
+                ,
+                title: {
+                    text: null
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: ' ',
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            tooltip: {
+                valueSuffix: ' '
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -40,
+                y: 100,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || 'White'),
+                shadow: true
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: '访问来源ip数量',
+                data: ipdata1//[133, 156, 947, 408, 6]
+            }]
+        });
+    });
+
+</script>
+<script>
+
+</script>
+<div style="background-color: lightyellow">
+
+    <div style="height: 10px"></div>
+    <div id="container"
+         style="min-width:50px; height: 420px; margin: 0 auto; width:1250px;position: relative;right:320px;z-index: 1;"></div>
+    <div id="container1"
+         style="min-width:240px; height:400px; margin: 20px auto;position: relative;left:670px;top:-450px;"></div>
+    <div style="height: 50px"></div>
+    <div style="height: 1px;border: #999999 1px solid;position: relative;top: -470px"></div>
+    <div id="container4"
+         style="min-width:300px;height:400px;position: relative;top: -420px;width:1100px;left:680px;z-index: 1"></div>
+    <div id="container2" style="position: absolute;top: -500px"></div>
+    <div id="container3"
+         style="min-width:240px; height: 400px; margin: 20px auto;;position: relative;right:670px;top:-860px;"></div>
+
+</div>
+</body>
+</html>

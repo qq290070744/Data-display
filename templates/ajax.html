@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+
+
+<p id="dict_result"></p>
+
+
+<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // 字典 dict
+        var auto = function () {
+            $.getJSON('/ajax_dict/', function (ret) {
+                //返回值 ret 在这里是一个字典
+                for(var i in ret){
+                    console.log(ret[i]);
+                }
+
+                $('#dict_result').append(ret.twz + '<br>');
+                // 也可以用 ret['twz']
+            })
+        }
+
+
+        setInterval(auto,1000);
+
+    });
+
+</script>
+</body>
+</html>
