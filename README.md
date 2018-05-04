@@ -16,3 +16,4 @@ python3  manage.py runserver 0.0.0.0:9000
  ![Alt text](http://121.201.68.21:8080/static/4.png)
  ![Alt text](http://121.201.68.21:8080/static/5.png)
  
+![Alt text](http://s1.51cto.com/images/20180504/1525403548451542.png)
